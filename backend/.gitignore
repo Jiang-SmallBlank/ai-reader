@@ -1,8 +1,7 @@
 # Dependencies
 node_modules/
 
-# Environment variables
-.env
+# Environment variables (excluding main .env file)
 .env.local
 .env.*.local
 
