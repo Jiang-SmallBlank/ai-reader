@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Reader</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              primary: "#D0BB95",
+              "primary-dark": "#b09b75",
+              "background-light": "#f7f7f6",
+              "background-dark": "#1d1a15",
+              "sidebar-light": "#f0f4f8",
+              "paper": "#fbfaf8"
+            },
+            fontFamily: {
+              sans: ['Inter', 'system-ui', 'sans-serif'],
+              serif: ['Noto Serif SC', 'serif']
+            }
+          }
+        }
+      }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-background-light text-slate-900 antialiased">
+    <div id="root"></div>
+  <script type="module" src="/src/index.tsx"></script>
+</body>
+</html>

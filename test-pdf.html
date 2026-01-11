@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PDF Test</title>
+</head>
+<body>
+  <h1>PDF Access Test</h1>
+
+  <div>
+    <h2>Test 1: Direct File Access</h2>
+    <p>Try accessing: <a href="http://localhost:3001/uploads/book-1768139449709-3824812.pdf" target="_blank">http://localhost:3001/uploads/book-1768139449709-3824812.pdf</a></p>
+  </div>
+
+  <div style="margin-top: 20px;">
+    <h2>Test 2: API Test</h2>
+    <button onclick="testAPI()">Test API Connection</button>
+    <pre id="apiResult"></pre>
+  </div>
+
+  <div style="margin-top: 20px;">
+    <h2>Test 3: PDF.js Test</h2>
+    <button onclick="testPDFJS()">Test PDF.js</button>
+    <pre id="pdfjsResult"></pre>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script>
+    // Set worker
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+    async function testAPI() {
+      const result = document.getElementById('apiResult');
+      result.textContent = 'Testing...';
+
+      try {
+        const response = await fetch('http://localhost:3001/uploads/book-1768139449709-3824812.pdf');
+        result.textContent = `Status: ${response.status}\nContent-Type: ${response.headers.get('Content-Type')}\nCORS: ${response.headers.get('Access-Control-Allow-Origin') || 'not set'}`;
+
+        if (response.ok) {
+          const blob = await response.blob();
+          result.textContent += `\nSize: ${blob.size} bytes`;
+        }
+      } catch (error) {
+        result.textContent = `Error: ${error.message}`;
+      }
+    }
+
+    async function testPDFJS() {
+      const result = document.getElementById('pdfjsResult');
+      result.textContent = 'Loading PDF...';
+
+      try {
+        const loadingTask = pdfjsLib.getDocument('http://localhost:3001/uploads/book-1768139449709-3824812.pdf');
+        const pdf = await loadingTask.promise;
+        result.textContent = `Success!\nPages: ${pdf.numPages}\nTitle: Ready to render`;
+      } catch (error) {
+        result.textContent = `Error: ${error.message}\n\nStack:\n${error.stack}`;
+      }
+    }
+  </script>
+</body>
+</html>
